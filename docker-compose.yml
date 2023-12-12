@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mysql-server:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3305:3306"
+    networks:
+      - crimson-network
+  server-container:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: crimson-nodeform
+    ports:
+      - "5000:5000"
+    networks:
+      - crimson-network
+    depends_on:
+      - mysql-server
+
+networks:
+  crimson-network:
+    driver: bridge
